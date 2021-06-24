@@ -1,0 +1,3 @@
+name: AstronomiaPlugin
+version: 1.0
+main: com.beeleeong.minecraft.plugins.AstronomiaPlugin
