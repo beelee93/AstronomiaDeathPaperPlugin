@@ -11,31 +11,37 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class AstronomiaPlugin extends JavaPlugin {
+public class AstronomiaPlugin extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
-        String version = this.getDescription().getAPIVersion();
+        String version = this.getDescription().getVersion();
         getLogger().info(String.format("AstronomiaPlugin %s enabled", version));
+
+        getServer().getPluginManager().registerEvents(this, this);
     }
 
     @Override
     public void onDisable() {
-        String version = this.getDescription().getAPIVersion();
+        String version = this.getDescription().getVersion();
         getLogger().info(String.format("AstronomiaPlugin %s disabled", version));
     }
 
     @EventHandler
-    public void onEntityDeath(final EntityDeathEvent event) {
+    public void onEntityDeath(EntityDeathEvent event) {
+        getLogger().info("entity death");
         Entity ent = event.getEntity();
         EntityDamageEvent damageEvent = ent.getLastDamageCause();
         DamageCause cause = damageEvent.getCause();
 
         if (ent instanceof Player) {
+            getLogger().info(String.format("Player %s died because of %s", ent.getName(), cause.name()));
+
             SoundPlayer soundPlayer = null;
             if (cause == DamageCause.FALL) {
                 soundPlayer = new Ohnono();
