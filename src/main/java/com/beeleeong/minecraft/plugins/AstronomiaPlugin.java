@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.beeleeong.minecraft.plugins.deathSoundPlayer.Astronomia;
-import com.beeleeong.minecraft.plugins.deathSoundPlayer.Ohnono;
+import com.beeleeong.minecraft.plugins.deathSoundPlayer.EmotionalDamage;
 import com.beeleeong.minecraft.plugins.deathSoundPlayer.SoundPlayer;
 
 import org.bukkit.Bukkit;
@@ -40,11 +40,12 @@ public class AstronomiaPlugin extends JavaPlugin implements Listener {
         DamageCause cause = damageEvent.getCause();
 
         if (ent instanceof Player) {
-            getLogger().info(String.format("Player %s died because of %s", ent.getName(), cause.name()));
+            getLogger().info(
+                    String.format("Player %s died because of %s", ent.getName(), cause.name()));
 
             SoundPlayer soundPlayer = null;
-            if (cause == DamageCause.FALL) {
-                soundPlayer = new Ohnono();
+            if (cause == DamageCause.LAVA) {
+                soundPlayer = new EmotionalDamage();
             } else {
                 soundPlayer = new Astronomia();
             }

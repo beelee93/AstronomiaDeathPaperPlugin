@@ -4,8 +4,8 @@ import org.bukkit.SoundCategory;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-public class Ohnono implements SoundPlayer {
-    private final String MUSIC_NAME = "music.ohnono";
+public class EmotionalDamage implements SoundPlayer {
+    private final String MUSIC_NAME = "music.emotional_damage";
 
     @Override
     public void playFor(Player p) {
