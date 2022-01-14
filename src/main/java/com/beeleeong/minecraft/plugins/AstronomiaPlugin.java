@@ -2,7 +2,7 @@ package com.beeleeong.minecraft.plugins;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import com.beeleeong.minecraft.plugins.commands.CommandSaveLocation;
 import com.beeleeong.minecraft.plugins.deathSoundPlayer.Astronomia;
 import com.beeleeong.minecraft.plugins.deathSoundPlayer.EmotionalDamage;
 import com.beeleeong.minecraft.plugins.deathSoundPlayer.SoundPlayer;
@@ -20,10 +20,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class AstronomiaPlugin extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
+        this.saveDefaultConfig();
+
         String version = this.getDescription().getVersion();
         getLogger().info(String.format("AstronomiaPlugin %s enabled", version));
 
         getServer().getPluginManager().registerEvents(this, this);
+
+        getCommand(CommandSaveLocation.COMMAND_NAME)
+                .setExecutor(new CommandSaveLocation(getLogger(), getConfig()));
     }
 
     @Override
@@ -44,7 +49,7 @@ public class AstronomiaPlugin extends JavaPlugin implements Listener {
                     String.format("Player %s died because of %s", ent.getName(), cause.name()));
 
             SoundPlayer soundPlayer = null;
-            if (cause == DamageCause.LAVA) {
+            if (cause == DamageCause.LAVA || cause == DamageCause.FIRE) {
                 soundPlayer = new EmotionalDamage();
             } else {
                 soundPlayer = new Astronomia();
